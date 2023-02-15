@@ -1,8 +1,6 @@
 import yaml
 import random
-from utils import get_config, reload_config
-
-config = get_config()["tags_config"]
+from utils import *
 
 class TagDatabase:
     def __init__(self, file, config) -> None:
@@ -23,8 +21,6 @@ class TagDatabase:
                         else:
                             self.database[i][0] += [tag]
     
-tag_database = TagDatabase("tags.yaml", config)
-
 class PromptGenerator:
     def __init__(self, tag_database: TagDatabase = None) -> None:
         self.database = tag_database.database
@@ -47,8 +43,20 @@ class PromptGenerator:
         
         return ", ".join(tags)
 
-p_gen = PromptGenerator(tag_database)
+def get_random_prompt():
+    return p_gen.get_random_prompt()
+
+def rebuild_prompt_generator():
+    global p_gen
+    config = get_config()["tags_config"]
+    tag_database = TagDatabase("tags.yaml", config)
+    p_gen = PromptGenerator(tag_database)
+
+add_reload_config_hook(rebuild_prompt_generator)
+
+p_gen = None
+rebuild_prompt_generator()
 
 if __name__ == "__main__":
     for i in range(20):
-        print(p_gen.get_random_prompt())
+        print(get_random_prompt())

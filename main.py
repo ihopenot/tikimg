@@ -5,6 +5,7 @@ import os
 import time
 from img_generator import ImgGenerator
 import threading 
+from utils import *
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False

@@ -9,9 +9,16 @@ def save_yaml(filename, obj):
 def get_config():
     return config
 
+reload_config_hooks = []
 def reload_config():
     global config
     config = load_yaml("config.yaml")
+
+    for hook in reload_config_hooks:
+        hook()
+
+def add_reload_config_hook(f):
+    reload_config_hooks.append(f)
 
 config = None
 reload_config()

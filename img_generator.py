@@ -1,10 +1,9 @@
 import requests
-import yaml
 import random
 import json
-from utils import get_config, reload_config
+from utils import *
 
-from prompt_generator import p_gen
+from prompt_generator import *
 
 class ImgGenerator:
     def __init__(self, url="http://127.0.0.1:7860"):
@@ -36,13 +35,14 @@ class ImgGenerator:
         return imgs[0]
 
     def get_random_img(self):
+        reload_config()
         overwrite_args = self.set_random_model()
         args = get_config()["default_args"]
 
         for k in overwrite_args:
             args[k] = overwrite_args[k]
 
-        args["prompt"] = p_gen.get_random_prompt()
+        args["prompt"] = get_random_prompt()
 
         return self.get_img(args), args
 
