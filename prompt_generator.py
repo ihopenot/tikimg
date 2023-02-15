@@ -1,8 +1,8 @@
 import yaml
 import random
+from utils import get_config, reload_config
 
-config = yaml.safe_load(open("config.yaml", "r", encoding='utf8').read())
-print(config)
+config = get_config()["tags_config"]
 
 class TagDatabase:
     def __init__(self, file, config) -> None:

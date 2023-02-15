@@ -1,6 +1,8 @@
 import requests
+import yaml
 import random
 import json
+from utils import get_config, reload_config
 
 from prompt_generator import p_gen
 
@@ -24,8 +26,6 @@ class ImgGenerator:
         self.set_model(name)
 
         args = {"model_name": name} 
-        if not "Orange" in name and not "anything" in name and not "Counterfeit" in name and not "pastelmix" in name:
-            pass
 
         return args
     
@@ -37,22 +37,7 @@ class ImgGenerator:
 
     def get_random_img(self):
         overwrite_args = self.set_random_model()
-        args = {
-            "prompt": "",
-            "negative_prompt": "nsfw, (worst quality, low quality:1.4), signature, watermark, username",
-            "height": 768,
-            "width": 512,
-            'seed': -1, 
-            'subseed': -1, 
-            'sampler_name': 'DPM++ SDE Karras', 
-            'steps': 20, 
-            'cfg_scale': 8, 
-            'denoising_strength': 0.6, 
-            'enable_hr': True, 
-            'hr_scale': 2, 
-            'hr_upscaler': 'Latent (nearest-exact)', 
-            'hr_second_pass_steps': 20, 
-        }
+        args = get_config()["default_args"]
 
         for k in overwrite_args:
             args[k] = overwrite_args[k]
@@ -60,3 +45,7 @@ class ImgGenerator:
         args["prompt"] = p_gen.get_random_prompt()
 
         return self.get_img(args), args
+
+if __name__ == "__main__":
+    img = ImgGenerator()
+    img.get_random_img()
