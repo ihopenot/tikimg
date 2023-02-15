@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <img src="data:;base64,{{ img_stream }}">
+
+    <br>
+
+    {{ args }}
+
+    <br>
+
+    <input type="button" onclick="dolike();" value="Like!" style="height: 200px;width: 100%;">
+    <script>
+    var dolike = function() {
+        var httpRequest = new XMLHttpRequest();
+            httpRequest.open('GET', '/like', true);
+            httpRequest.send();
+        alert("ok");
+    };
+    </script>
+</body>
+</html>
