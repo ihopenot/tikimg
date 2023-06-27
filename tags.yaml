@@ -1656,7 +1656,7 @@
 - race queen: 赛车女郎
 - wa lolita: 和风萝莉
 - wa maid: 和风女仆
-- 10!|glasses: 眼镜/眼镜娘
+# - glasses: 眼镜/眼镜娘
 - brother and sister: 姐弟/兄妹
 - cousins: 表亲
 - husband and wife: 夫妻
@@ -1705,9 +1705,9 @@
 人物.胸部size:
 # - chest: 胸肌
 # - breasts: 胸部
-- 10!|flat chest: 贫乳 (A)
-- 10!|small breasts: 小胸部 (B)
-- 5!|medium breasts: 中等胸部 (C)
+- 14!|flat chest: 贫乳 (A)
+- 14!|small breasts: 小胸部 (B)
+- 7!|medium breasts: 中等胸部 (C)
 - large breasts: 大胸 (D)
 # - huge breasts: 巨乳 (E)
 # - gigantic breasts: 魔乳 (F)
@@ -2660,7 +2660,7 @@
 # - papercraft: 纸艺
 # - paper child: 纸质角色
 # - paper cutout: 纸艺模型
-- 10|pixel art: 像素风
+- 10!|pixel art: 像素风
 # - postcard: 明信片
 # - poster: 海报
 # - revision: 修正版
@@ -2809,7 +2809,7 @@
 - print (medium): 印刷品
 - realistic: 现实的/真实的
 - retro artstyle: 赛璐璐/复古艺术
-- 10|sketch: 草图
+- 10!|sketch: 草图
 - style parody: 画风模仿
 - sumi-e: 墨绘
 - surreal: 怪诞的/超现实主义
@@ -3410,3 +3410,6 @@
 # - rape: 强暴
 # - about to be raped: 将要被强暴
 # - anal tail: 肛尾
+
+Special:
+  - glasses: glasses

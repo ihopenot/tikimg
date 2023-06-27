@@ -30,22 +30,22 @@ tags_config:
   - prob: 0.05
     types:
     - 人物.类型
-  - prob: 0.7
+  - prob: 0.9
     types:
     - 人物.胸部size
-  - prob: 0.5
+  - prob: 0.6
     types:
     - 人物.衣装
-  - prob: 0.24
+  - prob: 0.1
     types:
     - 人物.全身装饰
   - prob: 0.24
     types:
     - 人物.上身装饰
-  - prob: 0.15
+  - prob: 0.1
     types:
     - 人物.下身装饰
-  - prob: 0.3
+  - prob: 0.15
     types:
     - 人物.鞋袜
   - prob: 0.2
@@ -83,10 +83,13 @@ tags_config:
     - 人文景观.食物.调味料
     - 人文景观.食物.谷制品
     - 人文景观.食物.饮料
+  - prob: 0.5
+    types:
+    - Special
 
 default_args:
   prompt: ''
-  negative_prompt: nsfw, (worst quality, low quality:1.4), signature, watermark, username
+  negative_prompt: nsfw, (worst quality, low quality:1.4), signature, watermark, username, nipple
   height: 768
   width: 512
   seed: -1
