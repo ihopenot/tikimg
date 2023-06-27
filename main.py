@@ -31,8 +31,12 @@ class ImgPool(threading.Thread):
     def run(self):
         while True:
             self.sem.acquire()
-            img, args = self.img_gen.get_random_img()
-            self.imgs.append((img, args))
+            try:
+                img, args = self.img_gen.get_random_img()
+                self.imgs.append((img, args))
+            except AssertionError:
+                pass
+
 
     def get_img(self):
         if len(self.imgs) == 0:
@@ -48,7 +52,7 @@ class ImgPool(threading.Thread):
     def get_last(self):
         return self.last
 
-img_pool = ImgPool(size=100)
+img_pool = ImgPool(size=300)
 img_pool.daemon = True
 img_pool.start()
 
