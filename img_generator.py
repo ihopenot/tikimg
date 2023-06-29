@@ -15,16 +15,16 @@ class ImgGenerator:
         return json.loads(r.text)
     
     def set_model(self, info):
-        r = requests.post(f"{self.url}/set-model", json={"info": info})
+        r = requests.post(f"{self.url}/options", json={"sd_model_checkpoint": info})
         assert r.status_code == 200
 
     def set_random_model(self):
         models = self.get_models()
         idx = random.randint(0, len(models)-1)
-        name = models[idx]["model_name"]
+        name = models[idx]["title"]
         self.set_model(name)
 
-        args = {"model_name": name} 
+        args = {"sd_model_checkpoint": name} 
 
         return args
     
