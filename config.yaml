@@ -90,15 +90,36 @@ tags_config:
 default_args:
   prompt: ''
   negative_prompt: nsfw, (worst quality, low quality:1.4), signature, watermark, username, nipple
-  height: 768
+  height: 512
   width: 512
   seed: -1
   steps: 20
   subseed: -1
-  sampler_name: DPM++ SDE Karras
+  sampler_name: DPM++ 2M SDE Heun Karras
   cfg_scale: 8
   enable_hr: true
   denoising_strength: 0.6
   hr_scale: 2
   hr_second_pass_steps: 20
   hr_upscaler: Latent (nearest-exact)
+
+xl_default_args:
+  prompt: ''
+  negative_prompt: nsfw
+  height: 1024
+  width: 1024
+  seed: -1
+  steps: 28
+  subseed: -1
+  sampler_name: DPM++ 2M SDE Heun Karras
+  cfg_scale: 8
+  enable_hr: false
+  denoising_strength: 0.6
+
+sdxl_models:
+  - animexlXuebimix_v40
+  - counterfeitxl_v10
+  - FinalAnimeCG_mk2a2
+
+xl_vae: sdxl_vae.safetensors
+default_vae: model.vae.pt
