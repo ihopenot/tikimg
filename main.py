@@ -25,7 +25,7 @@ class ImgPool(threading.Thread):
         self.imgs = []
         self.size = size
         self.last = ""
-        self.img_gen = ImgGenerator()
+        self.img_gen = ImgGenerator(get_config()["sdw_url"])
         self.sem = threading.Semaphore(size)
 
     def run(self):

@@ -123,3 +123,5 @@ sdxl_models:
 
 xl_vae: sdxl_vae.safetensors
 default_vae: model.vae.pt
+
+sdw_url: http://127.0.0.1:8085

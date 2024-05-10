@@ -41,19 +41,23 @@ class ImgGenerator:
         return imgs[0]
 
     def get_random_img(self):
-        reload_config()
-        overwrite_args, isXL = self.set_random_model()
-        if isXL:
-            args = get_config()["xl_default_args"]
-        else:
-            args = get_config()["default_args"]
+        while True:
+            try:
+                reload_config()
+                overwrite_args, isXL = self.set_random_model()
+                if isXL:
+                    args = get_config()["xl_default_args"]
+                else:
+                    args = get_config()["default_args"]
 
-        for k in overwrite_args:
-            args[k] = overwrite_args[k]
+                for k in overwrite_args:
+                    args[k] = overwrite_args[k]
 
-        args["prompt"] = get_random_prompt()
+                args["prompt"] = get_random_prompt()
 
-        return self.get_img(args), args
+                return self.get_img(args), args
+            except Exception as e:
+                print(e)
 
 if __name__ == "__main__":
     img = ImgGenerator()
