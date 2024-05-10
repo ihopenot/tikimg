@@ -29,10 +29,17 @@ class ImgGenerator:
         models = self.get_models()
         idx = random.randint(0, len(models)-1)
         name = models[idx]["title"]
-        isXL = models[idx]["model_name"] in get_config()["sdxl_models"]
+        model_name = models[idx]["model_name"]
+        print(model_name)
+        isXL = model_name in get_config()["sdxl_models"]
         self.set_model(name, isXL)
 
         args = {"sd_model_checkpoint": name} 
+
+        sp_args = get_config()["specific_args"]
+        if model_name in sp_args:
+            for i in sp_args[model_name]:
+                args[i] = sp_args[model_name][i]
 
         return args, isXL
     
@@ -56,12 +63,17 @@ class ImgGenerator:
                 for k in overwrite_args:
                     args[k] = overwrite_args[k]
 
-                args["prompt"] = get_random_prompt()
+                for k in args:
+                    args[k] = NChoseProb(args[k])
+            
+                args = get_prob_result(args)
+
+                args["prompt"] = get_random_prompt(args["prompt_format"], args["custom_prompts"])
 
                 return self.get_img(args), args
             except Exception as e:
                 print(e)
 
 if __name__ == "__main__":
-    img = ImgGenerator()
+    img = ImgGenerator("http://127.0.0.1:8085")
     img.get_random_img()
