@@ -2,3 +2,6 @@ __pycache__/
 tags
 myconfigs
 favorite
+config
+
+venv
