@@ -34,8 +34,8 @@ class ImgPool(threading.Thread):
             try:
                 img, args = self.img_gen.get_random_img()
                 self.imgs.append((img, args))
-            except AssertionError:
-                pass
+            except Exception as e:
+                print(e)
 
 
     def get_img(self):
