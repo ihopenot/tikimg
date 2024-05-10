@@ -12,7 +12,11 @@ def get_config():
 reload_config_hooks = []
 def reload_config():
     global config
-    config = load_yaml("config.yaml")
+    try:
+        config = load_yaml("config/config.yaml")
+    except FileNotFoundError:
+        open("config/config.yaml", "w").write(open("config.default.yaml", "r").read())
+        config = load_yaml("config/config.yaml")
 
     for hook in reload_config_hooks:
         hook()

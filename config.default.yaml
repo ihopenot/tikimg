@@ -1,77 +1,100 @@
+# categories: quality/total/style/character/series/artists/general
 tags_config:
   - prob: 0.05
     types:
     - 构图.制图特效
     - 构图.图片类型
     - 构图.画风
+    categories: style
   - prob: 0.07
     types:
     - 构图.色彩
+    categories: style
   - prob: 0.1
     types:
     - 构图.视角
+    categories: style
   - prob: 0.07
     types:
     - 构图.背景
+    categories: general
   - prob: 0.4
     types:
     - 人文景观.位置.室内
     - 人文景观.位置.室外
     - 人文景观.位置.建筑物
     - 人文景观.城市
+    categories: general
   - prob: 0.4
     types:
     - 自然景观.位置.室外
     - 自然景观.天空/气象
     - 自然景观.花卉
+    categories: general
   - prob: 0.12
     types:
     - 人物.摆位
+    categories: general
   - prob: 0.05
     types:
     - 人物.类型
+    categories: general
   - prob: 0.9
     types:
     - 人物.胸部size
+    categories: general
   - prob: 0.6
     types:
     - 人物.衣装
+    categories: general
   - prob: 0.1
     types:
     - 人物.全身装饰
+    categories: general
   - prob: 0.24
     types:
     - 人物.上身装饰
+    categories: general
   - prob: 0.1
     types:
     - 人物.下身装饰
+    categories: general
   - prob: 0.15
     types:
     - 人物.鞋袜
+    categories: general
   - prob: 0.2
     types:
     - 人物.胸部
+    categories: general
   - prob: 0.2
     types:
     - 人物.头发
+    categories: general
   - prob: 0.3
     types:
     - 人物.头部饰品
+    categories: general
   - prob: 0.1
     types:
     - 人物.耳朵
+    categories: general
   - prob: 0.11
     types:
     - 人物.脖子
+    categories: general
   - prob: 0.15
     types:
     - 人物.动作
+    categories: general
   - prob: 0.15
     types:
     - 人物.面部
+    categories: general
   - prob: 0.2
     types:
     - 物品
+    categories: general
   - prob: 0.1
     types:
     - 人文景观.食物.主食
@@ -83,9 +106,11 @@ tags_config:
     - 人文景观.食物.调味料
     - 人文景观.食物.谷制品
     - 人文景观.食物.饮料
-  - prob: 0.5
+    categories: general
+  - prob: 0.3
     types:
     - Special
+    categories: general
 
 default_args:
   prompt: ''
@@ -95,7 +120,7 @@ default_args:
   seed: -1
   steps: 20
   subseed: -1
-  sampler_name: DPM++ 2M SDE Heun Karras
+  sampler_name: DPM++ 2M SDE Heun
   cfg_scale: 8
   enable_hr: true
   denoising_strength: 0.6
@@ -104,15 +129,17 @@ default_args:
   hr_upscaler: Latent (nearest-exact)
 
 xl_default_args:
+  prompt_format: "quality/total/style/character/series/artists/general"
+  custom_prompts:
   prompt: ''
-  negative_prompt: nsfw
+  negative_prompt: low quality, worst quality, normal quality, text, signature, jpeg artifacts, bad anatomy, old, early, mini skirt, nsfw, multiple tails, multiple views, copyright name, watermark, artist name, signature
   height: 1024
   width: 1024
   seed: -1
-  steps: 28
+  steps: 16
   subseed: -1
-  sampler_name: DPM++ 2M SDE Heun Karras
-  cfg_scale: 8
+  sampler_name: DPM++ 2M SDE Heun
+  cfg_scale: 5
   enable_hr: false
   denoising_strength: 0.6
 
@@ -120,6 +147,27 @@ sdxl_models:
   - animexlXuebimix_v40
   - counterfeitxl_v10
   - FinalAnimeCG_mk2a2
+  - kohakuXLEpsilon_rev1
+  - jruTheJourneyRemains_v20XL
+  - ponyDiffusionV6XL_v6StartWithThisOne
+
+specific_args:
+  kohakuXLEpsilon_rev1:
+    prompt_format: "total/character/series/artists/style/general/quality"
+
+    custom_prompts:
+      - prob: 1
+        types:
+          - Kohaku
+        categories: artists
+
+    sampler_name: DPM++ 2M SDE Heun
+    scheduler:
+      - Karras
+      - SGM Uniform
+    cfg_scale: 
+      - 5
+      - 6
 
 xl_vae: sdxl_vae.safetensors
 default_vae: model.vae.pt
