@@ -1,10 +1,12 @@
 import requests
 import random
 import json
+import traceback
 from utils import *
 
 from prompt_generator import *
 
+not_n_chose_list = ["custom_prompts"]
 class ImgGenerator:
     def __init__(self, url="http://127.0.0.1:7860"):
         self.url = f"{url}/sdapi/v1"
@@ -64,7 +66,8 @@ class ImgGenerator:
                     args[k] = overwrite_args[k]
 
                 for k in args:
-                    args[k] = NChoseProb(args[k])
+                    if k not in not_n_chose_list:
+                        args[k] = NChoseProb(args[k])
             
                 args = get_prob_result(args)
 
@@ -72,7 +75,7 @@ class ImgGenerator:
 
                 return self.get_img(args), args
             except Exception as e:
-                print(e)
+                traceback.print_tb(e.__traceback__)
 
 if __name__ == "__main__":
     img = ImgGenerator("http://127.0.0.1:8085")
