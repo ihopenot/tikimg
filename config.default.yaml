@@ -113,6 +113,8 @@ tags_config:
     categories: general
 
 default_args:
+  prompt_format: "quality/total/style/character/series/artists/general"
+  custom_prompts:
   prompt: ''
   negative_prompt: nsfw, (worst quality, low quality:1.4), signature, watermark, username, nipple
   height: 512
@@ -121,6 +123,7 @@ default_args:
   steps: 20
   subseed: -1
   sampler_name: DPM++ 2M SDE Heun
+  scheduler: Karras
   cfg_scale: 8
   enable_hr: true
   denoising_strength: 0.6
@@ -132,8 +135,8 @@ xl_default_args:
   prompt_format: "quality/total/style/character/series/artists/general"
   custom_prompts:
   prompt: ''
-  negative_prompt: low quality, worst quality, normal quality, text, signature, jpeg artifacts, bad anatomy, old, early, mini skirt, nsfw, multiple tails, multiple views, copyright name, watermark, artist name, signature
-  height: 1024
+  negative_prompt: NSFW, nipple, low quality, worst quality, normal quality, text, signature, jpeg artifacts, bad anatomy, old, early, mini skirt, nsfw, multiple tails, multiple views, copyright name, watermark, artist name, signature
+  height: 1400
   width: 1024
   seed: -1
   steps: 16
@@ -141,7 +144,7 @@ xl_default_args:
   sampler_name: DPM++ 2M SDE Heun
   cfg_scale: 5
   enable_hr: false
-  denoising_strength: 0.6
+  # denoising_strength: 0.7
 
 sdxl_models:
   - animexlXuebimix_v40
@@ -150,6 +153,7 @@ sdxl_models:
   - kohakuXLEpsilon_rev1
   - jruTheJourneyRemains_v20XL
   - ponyDiffusionV6XL_v6StartWithThisOne
+  - netaArtXL_v10
 
 specific_args:
   kohakuXLEpsilon_rev1:
@@ -160,14 +164,47 @@ specific_args:
         types:
           - Kohaku
         categories: artists
+      - prob: 0.6
+        types:
+          - KohakuSpecial
+        categories: style
 
-    sampler_name: DPM++ 2M SDE Heun
     scheduler:
       - Karras
       - SGM Uniform
     cfg_scale: 
       - 5
       - 6
+
+  netaArtXL_v10:
+    prompt_format: "total/character/series/artists/style/general/quality"
+
+    steps: 35
+    scheduler:
+      # - Karras
+      - SGM Uniform
+    cfg_scale: 
+      - 5
+      - 11
+  
+  ponyDiffusionV6XL_v6StartWithThisOne:
+    custom_prompts:
+      - prob: 1
+        types:
+          - PonyQuality
+        categories: quality
+      - prob: 1
+        types:
+          - PonyStyle
+        categories: style
+
+    negative_prompt: score_6, score_5, score_4, busty, black and white, futanari, girl with penis, NSFW, nipple, low quality, worst quality, normal quality, text, signature, jpeg artifacts, bad anatomy, old, early, mini skirt, nsfw, multiple tails, multiple views, copyright name, watermark, artist name, signature
+    steps: 40
+    scheduler:
+      # - Karras
+      - SGM Uniform
+    cfg_scale: 
+      - 5
 
 xl_vae: sdxl_vae.safetensors
 default_vae: model.vae.pt

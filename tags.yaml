@@ -3413,3 +3413,19 @@
 
 Special:
   - glasses: glasses
+
+Kohaku:
+  - ask \(askzy\), torino aqua, migolu, (jiu ye sang:1.1), (rumoon:0.9), (mizumi zumi:1.1): art1
+  - ciloranko, maccha \(mochancc\), lobelia \(saclia\), migolu, ask \(askzy\), wanke, (jiu ye sang:1.1), (rumoon:0.9), (mizumi zumi:1.1): art2
+  # - shiro9jira, ciloranko, ask \(askzy\), (tianliang duohe fangdongye:0.8): art3
+  - (azuuru:1.1), (torino aqua:1.2), (azuuru:1.1), kedama milk, fuzichoco, ask \(askzy\), chen bin, atdan, hito, mignon: art4
+  - ask \(askzy\), torino aqua, migolu: art5
+
+KohakuSpecial:
+  - watercolor,gauche painting, pastel color: water color
+
+PonyQuality:
+  - score_9, score_8_up, score_8: quality
+
+PonyStyle:
+  - anime style: anime

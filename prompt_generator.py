@@ -1,50 +1,87 @@
 import yaml
 import random
+from typing import Dict, List
 from utils import *
+
+class Prompt_Entry:
+    def __init__(self, tags, prob, types, categories) -> None:
+        assert categories != None
+        self.prob = prob
+        self.tags = []
+        for type in types:
+            self.tags += tags[type]
+        self.categories = categories
+    
+    def get(self):
+        if random.random() < self.prob:
+            return [random.choice(self.tags)]
+        else:
+            return []
 
 class TagDatabase:
     def __init__(self, file, config) -> None:
         data = open(file, encoding='utf-8').read()
         r = yaml.safe_load(data)
-        self.database = [ [[], config[i]["prob"]] for i in range(len(config))]
-        for k in r:
-            for i in range(len(config)):
-                if k not in config[i]["types"]:
-                    continue
+        self.tags = {k: [] for k in r}
+        for tagtype in r:
+            for tag in r[tagtype]:
+                for tagname in tag:
+                    tagname = tagname.replace("\\\\", "\\")
+                    if "!|" in tagname:
+                        num, tagname = tagname.split('!|')
+                        num = int(num)
+                        self.tags[tagtype] += [tagname] * num
+                    else:
+                        self.tags[tagtype] += [tagname]
 
-                for v in r[k]:
-                    for tag in v:
-                        if "!|" in tag:
-                            num, tag = tag.split('!|')
-                            num = int(num)
-                            self.database[i][0] += [tag] * num
-                        else:
-                            self.database[i][0] += [tag]
+        self.prompt_entrys = [ self.create_prompt_entry(conf["prob"], conf["types"], conf["categories"]) for conf in config]
+    
+    def create_prompt_entry(self, prob, types, categories):
+        return Prompt_Entry(self.tags, prob, types, categories)
     
 class PromptGenerator:
     def __init__(self, tag_database: TagDatabase = None) -> None:
-        self.database = tag_database.database
+        self.database = tag_database
     
-    def get_random_prompt(self):
-        tags = ["masterpiece", "best quality", "ultra-detailed", "illustration"]
+    def get_random_prompt(self, custom=None):
+        tags : Dict[str, List] = {
+            "quality": ["masterpiece", "best quality", "ultra-detailed", "illustration"],
+            "total": [],
+            "style": [],
+            "character": [],
+            "series": [],
+            "artists": [],
+            "general": [],
+        }
 
-        # girls numer
+        # girls number
         if random.random() < 0.07:
-            tags.append("2girls")
+            tags["total"].append("2girls")
         else:
-            tags.append("1girl")
+            tags["total"].append("1girls")
         
         if self.database == None:
-            return ", ".join(tags)
+            return tags
 
-        for choice in self.database:
-            if random.random() < choice[1]:
-                tags.append(random.choice(choice[0]))
+        for entry in self.database.prompt_entrys:
+            tags[entry.categories] += entry.get()
         
-        return ", ".join(tags)
+        if custom is None:
+            return tags
+        
+        for conf in custom:
+            entry = self.database.create_prompt_entry(conf["prob"], conf["types"], conf["categories"])
+            tags[entry.categories] += entry.get()
+        
+        return tags
 
-def get_random_prompt():
-    return p_gen.get_random_prompt()
+def get_random_prompt(format, custom):
+    ret = []
+    tags = p_gen.get_random_prompt(custom)
+    order = format.split('/')
+    for i in order:
+        ret += tags[i]
+    return ", ".join(ret)
 
 def rebuild_prompt_generator():
     global p_gen
