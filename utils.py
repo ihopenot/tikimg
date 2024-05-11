@@ -49,8 +49,10 @@ class NChoseProb(Prob):
 def get_prob_result(probs: Dict[str, Prob]):
     ret = {}
     for k in probs:
-        ret[k] = probs[k].get()
-    print(ret)
+        if isinstance(probs[k], Prob):
+            ret[k] = probs[k].get()
+        else:
+            ret[k] = probs[k]
     return ret
 
 
