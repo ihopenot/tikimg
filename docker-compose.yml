@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  sdw:
+    restart: unless-stopped
+    image: siutin/stable-diffusion-webui-docker:latest-cuda
+    container_name: sdw
+    command: bash webui.sh --listen --medvram-sdxl --api --enable-insecure-extension-access
+    ports:
+      - '8085:7860'
+    volumes:
+      - ./models:/app/stable-diffusion-webui/models
+      - ./outputs:/app/stable-diffusion-webui/outputs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  tikimg:
+    restart: unless-stopped
+    image: tikimg:latest
+    container_name: tikimg
+    ports:
+      - '7861:7861'
+    command: python main.py
+    volumes:
+      - ./config:/app/config
+
